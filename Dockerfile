@@ -1,9 +1,10 @@
-FROM node:16
+FROM node:16.13.1
 
 WORKDIR /app
 
-COPY ./ ./
+COPY . .
 
-RUN yarn add
+RUN yarn install
 
-CMD ["yarn", "start"]
+EXPOSE 3000
+CMD [ "yarn", "start" ]

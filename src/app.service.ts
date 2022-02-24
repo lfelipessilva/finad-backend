@@ -4,6 +4,7 @@ let counter = 0;
 @Injectable()
 export class AppService {
   getHello(): string {
+    return `${process.env.DB_HOST}`;
     counter++;
     return `Hello World! This site has been visited ${counter}`;
   }
