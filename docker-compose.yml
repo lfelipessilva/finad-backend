@@ -1,6 +1,15 @@
 version: '3'
 
 services:
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - '3000:3000'
+  #   depends_on:
+  #     - db
+
   pgsql:
     image: postgres:alpine
     ports:
