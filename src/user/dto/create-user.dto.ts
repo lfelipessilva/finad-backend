@@ -6,5 +6,5 @@ export class CreateUserDto {
   income: any[];
   spent: any[];
   created_at: Date;
-  upated_at: Date;
+  updated_at: Date;
 }

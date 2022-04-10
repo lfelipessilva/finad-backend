@@ -16,8 +16,8 @@ model User {
   email      String
   name       String
   money      Decimal
-  Income     Income[]
-  Spent      Spent[]
+  income     Income[]
+  spent      Spent[]
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 }

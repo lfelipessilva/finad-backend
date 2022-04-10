@@ -10,6 +10,8 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from 'src/types/User';
+import { v4 as uuid } from 'uuid';
 
 @Controller('user')
 export class UserController {
@@ -17,6 +19,10 @@ export class UserController {
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
+    createUserDto.id = uuid();
+    createUserDto.created_at = new Date(Date.now());
+    createUserDto.updated_at = new Date(Date.now());
+
     return this.userService.create(createUserDto);
   }
 
