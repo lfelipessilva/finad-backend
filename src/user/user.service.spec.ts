@@ -34,7 +34,7 @@ const userArray = [
 const oneUser = userArray[0];
 
 const db = {
-  cat: {
+  user: { 
     create: jest.fn().mockReturnValue(oneUser),
     update: jest.fn().mockResolvedValue(oneUser),
     findFirst: jest.fn().mockResolvedValue(oneUser),
@@ -45,52 +45,7 @@ const db = {
   },
 };
 
-// describe('UserService', () => {
-//   let service: UserService;
-//   let prisma: PrismaService;
-
-//   beforeEach(async () => {
-//     const module: TestingModule = await Test.createTestingModule({
-//       providers: [
-//         UserService,
-//         {
-//           provide: PrismaService,
-//           useValue: db,
-//         },
-//       ],
-//     }).compile();
-
-//     service = module.get<UserService>(UserService);
-//     // prisma = module.get<PrismaService>(PrismaService);
-//   });
-
-//   it('should be defined', () => {
-//     expect(service).toBeDefined();
-//   });
-
-//   describe('Create', () => {
-//     it('should create one user', async () => {
-//       const user: CreateUserDto = {
-//         id: uuid(),
-//         email: 'user@example.com',
-//         name: 'example',
-//         money: '4500',
-//         income: [],
-//         spent: [],
-//         created_at: new Date(Date.now()),
-//         updated_at: new Date(Date.now()),
-//       };
-
-//       console.log(user);
-//       const createdUser = await service.create(user);
-
-//       expect(createdUser).toBeDefined();
-//       expect(createdUser.id).toBeDefined();
-//       expect(createdUser.name).toBe('example');
-//     });
-//   });
-// });
-describe('UserService', () => {
+describe('UserService', () => { 
   let service: UserService;
   let prisma: PrismaService;
 
@@ -114,9 +69,13 @@ describe('UserService', () => {
   });
 
   describe('getAll', () => {
-    it('should return an array of cats', async () => {
+    it('should return an array of users', async () => {
       const users = await service.findAll();
       expect(users).toEqual(userArray);
     });
+
+    it('should update an user', async () => {
+      const user = await service.update('aijdflasjdf', oneUser)
+    })
   });
 });

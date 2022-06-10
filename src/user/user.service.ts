@@ -22,7 +22,7 @@ export class UserService {
   }
 
   update(id: string, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return ;
   }
 
   remove(id: string) {
