@@ -13,8 +13,32 @@ services:
   pgsql:
     image: postgres:alpine
     ports:
-      - '5432:5432'
+      - '5430:5432'
     container_name: 'pgsql'
+    restart: always
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: finad
+      POSTGRES_PASSWORD: finad!2022
+
+  pgsql_dev:
+    image: postgres:alpine
+    ports:
+      - '5228:5432'
+    container_name: 'pgsql_dev'
+    restart: always
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: finad
+      POSTGRES_PASSWORD: finad!2022
+
+  pgsql_test:
+    image: postgres:alpine
+    ports:
+      - '5111:5432'
+    container_name: 'pgsql_test'
     restart: always
     volumes:
       - pg-data:/var/lib/postgresql/data
