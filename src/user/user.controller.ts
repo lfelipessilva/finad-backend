@@ -13,7 +13,7 @@ import { UserService } from './user.service';
 import { AuthService } from '../auth/auth.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { v4 as uuid } from 'uuid';
-import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { LocalAuthGuard } from '../auth/local-auth.guard';
 
 @Controller('user')
 export class UserController {

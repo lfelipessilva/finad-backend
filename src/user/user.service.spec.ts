@@ -1,6 +1,8 @@
+import { JwtService } from '@nestjs/jwt';
 import { UserService } from './user.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { v4 as uuid } from 'uuid';
+import { AuthService } from '../auth/auth.service';
 
 const testingUser = {
   id: uuid(),
@@ -15,10 +17,14 @@ const testingUser = {
 describe('UserService', () => {
   let userService: UserService;
   let prismaService: PrismaService;
+  let authService: AuthService;
+  let jwtService: JwtService
 
   beforeEach(async () => {
+    jwtService = new JwtService()
     prismaService = new PrismaService();
     userService = new UserService(prismaService);
+    authService = new AuthService(userService, jwtService);
   });
 
   it('should be defined', () => {
