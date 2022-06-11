@@ -18,12 +18,13 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    createUserDto.id = uuid();
-    createUserDto.created_at = new Date(Date.now());
-    createUserDto.updated_at = new Date(Date.now());
-
-    return this.userService.create(createUserDto);
+  create(@Body() requestUser: any) {
+    requestUser.id = uuid();
+    requestUser.created_at = new Date(Date.now());
+    requestUser.updated_at = new Date(Date.now());
+    requestUser.money = 0
+    
+    return this.userService.create(requestUser);
   }
 
   @Get()

@@ -2,7 +2,7 @@ export class CreateUserDto {
   id: string;
   email: string;
   name: string;
-  money: string;
+  money: number;
   income: any[];
   spent: any[];
   created_at: Date;
