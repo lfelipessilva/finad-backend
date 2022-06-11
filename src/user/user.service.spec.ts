@@ -9,7 +9,7 @@ const testingUser = {
   money: 1300,
   created_at: new Date(Date.now()),
   updated_at: new Date(Date.now()),
-}
+};
 
 describe('UserService', () => {
   let userService: UserService;
@@ -18,7 +18,7 @@ describe('UserService', () => {
   beforeEach(async () => {
     prismaService = new PrismaService();
     userService = new UserService(prismaService);
-  })
+  });
 
   it('should be defined', () => {
     expect(userService).toBeDefined();
@@ -32,47 +32,43 @@ describe('UserService', () => {
 
   it('should return an array of users', async () => {
     const users = await userService.findAll();
-    expect(users).toEqual(
-      expect.arrayContaining([
-        testingUser,
-      ])
-    );
+    expect(users).toEqual(expect.arrayContaining([testingUser]));
   });
 
   it('should find one user', async () => {
     const foundUser = await userService.findOne(testingUser.id);
 
-    expect(foundUser?.name).toBeTruthy()
-  })
+    expect(foundUser?.name).toBeTruthy();
+  });
 
   it('should update an user', async () => {
-    const userId = testingUser.id
+    const userId = testingUser.id;
     const userDataToUpdate = {
       email: 'update@example.com',
       name: 'update',
       money: 1600,
-    }
+    };
     const user = await userService.update(userId, userDataToUpdate);
 
     expect(user.name).toEqual('update');
     expect(user.email).toEqual('update@example.com');
     expect(user.money).toEqual(1600);
-  })
+  });
 
   it('should not find one user', async () => {
     const foundUser = await userService.findOne('14');
 
-    expect(foundUser).toBeFalsy()
-  })
+    expect(foundUser).toBeFalsy();
+  });
 
   it('should delete one user', async () => {
-    const userId = testingUser.id
+    const userId = testingUser.id;
     const deletedUser = await userService.remove(userId);
 
-    expect(deletedUser.id).toBe(userId)
-  })
+    expect(deletedUser.id).toBe(userId);
+  });
 
   afterAll(async () => {
-    await prismaService.user.deleteMany()
-  })
-})
+    await prismaService.user.deleteMany();
+  });
+});

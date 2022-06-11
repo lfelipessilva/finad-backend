@@ -5,7 +5,7 @@ import { User } from '@prisma/client';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(user: User): Promise<User> {
     try {
@@ -41,8 +41,8 @@ export class UserService {
     try {
       return await this.prisma.user.findUnique({
         where: {
-          id: id
-        }
+          id: id,
+        },
       });
     } catch (error) {
       throw new HttpException(
@@ -62,9 +62,9 @@ export class UserService {
           id: id,
         },
         data: {
-          ...updateData
-        }
-      })
+          ...updateData,
+        },
+      });
     } catch (error) {
       throw new HttpException(
         {
@@ -80,8 +80,8 @@ export class UserService {
     try {
       return await this.prisma.user.delete({
         where: {
-          id: id
-        }
+          id: id,
+        },
       });
     } catch (error) {
       throw new HttpException(
@@ -92,6 +92,5 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-
   }
 }
