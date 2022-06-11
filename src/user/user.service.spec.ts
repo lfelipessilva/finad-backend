@@ -6,6 +6,7 @@ const testingUser = {
   id: uuid(),
   email: 'user@example.com',
   name: 'example',
+  password: 'test',
   money: 1300,
   created_at: new Date(Date.now()),
   updated_at: new Date(Date.now()),
