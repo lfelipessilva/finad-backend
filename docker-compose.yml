@@ -17,7 +17,7 @@ services:
     container_name: 'pgsql'
     restart: always
     volumes:
-      - pg-data:/var/lib/postgresql/data
+      - pg-data:/var/lib/postgresql/pgdata
     environment:
       POSTGRES_USER: finad
       POSTGRES_PASSWORD: finad!2022
@@ -29,7 +29,19 @@ services:
     container_name: 'pgsql_dev'
     restart: always
     volumes:
-      - pg-data:/var/lib/postgresql/data
+      - pg-data:/var/lib/postgresql/pgdata
+    environment:
+      POSTGRES_USER: finad
+      POSTGRES_PASSWORD: finad!2022
+
+  pgsql_dev_shadow:
+    image: postgres:alpine
+    ports:
+      - '5227:5432'
+    container_name: 'pgsql_dev_shadow'
+    restart: always
+    volumes:
+      - pg-data:/var/lib/postgresql/pgdata
     environment:
       POSTGRES_USER: finad
       POSTGRES_PASSWORD: finad!2022
@@ -41,7 +53,19 @@ services:
     container_name: 'pgsql_test'
     restart: always
     volumes:
-      - pg-data:/var/lib/postgresql/data
+      - pg-data:/var/lib/postgresql/pgdata
+    environment:
+      POSTGRES_USER: finad
+      POSTGRES_PASSWORD: finad!2022
+
+  pgsql_test_shadow:
+    image: postgres:alpine
+    ports:
+      - '5110:5432'
+    container_name: 'pgsql_test_shadow'
+    restart: always
+    volumes:
+      - pg-data:/var/lib/postgresql/pgdata
     environment:
       POSTGRES_USER: finad
       POSTGRES_PASSWORD: finad!2022
