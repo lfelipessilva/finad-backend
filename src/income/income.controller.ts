@@ -12,7 +12,7 @@ import {
 import { IncomeService } from './income.service';
 import { CreateIncomeDto } from './dto/create-income.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
 import { Income } from '../types/Income';
 @Controller('income')
@@ -33,7 +33,7 @@ export class IncomeController {
       userId: req.user.id,
       description: incomeRequest.description,
       value: incomeRequest.value,
-      date: incomeRequest.date,
+      date: new Date(incomeRequest.date),
       created_at: new Date(Date.now()),
       updated_at: new Date(Date.now()),
     } as Income;
@@ -41,21 +41,23 @@ export class IncomeController {
     return this.incomeService.create(income);
   }
 
-  @Get()
-  findAll() {
-    return this.incomeService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.incomeService.findAll();
+  // }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.incomeService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateIncomeDto: UpdateIncomeDto) {
     return this.incomeService.update(id, updateIncomeDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.incomeService.remove(id);

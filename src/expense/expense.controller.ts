@@ -12,7 +12,7 @@ import {
 import { ExpenseService } from './expense.service';
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
 import { Expense } from '../types/Expense';
 @Controller('expense')
@@ -41,21 +41,23 @@ export class ExpenseController {
     return this.expenseService.create(expense);
   }
 
-  @Get()
-  findAll() {
-    return this.expenseService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.expenseService.findAll();
+  // }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.expenseService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateExpenseDto: UpdateExpenseDto) {
     return this.expenseService.update(id, updateExpenseDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.expenseService.remove(id);
