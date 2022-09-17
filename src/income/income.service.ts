@@ -56,6 +56,24 @@ export class IncomeService {
     }
   }
 
+  async findFromUserById(userId: string) {
+    try {
+      return await this.prisma.income.findMany({
+        where: {
+          userId: userId
+        }
+      });
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Could not find user incomes',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
   async update(id: string, updateData: UpdateIncomeDto): Promise<Income> {
     try {
       return await this.prisma.income.update({

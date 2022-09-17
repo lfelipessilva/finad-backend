@@ -6,7 +6,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class ExpenseService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(expense: Expense): Promise<Expense> {
     try {
@@ -56,6 +56,24 @@ export class ExpenseService {
     }
   }
 
+  async findFromUserById(userId: string) {
+    try {
+      return await this.prisma.expense.findMany({
+        where: {
+          userId: userId,
+        },
+      });
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Could not find user expenses',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
   async update(id: string, updateData: UpdateExpenseDto): Promise<Expense> {
     try {
       return await this.prisma.expense.update({
@@ -81,8 +99,8 @@ export class ExpenseService {
     try {
       return await this.prisma.expense.delete({
         where: {
-          id: id
-        }
+          id: id,
+        },
       });
     } catch (error) {
       throw new HttpException(
