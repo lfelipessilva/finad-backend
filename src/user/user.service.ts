@@ -17,10 +17,13 @@ export class UserService {
         data: user,
       });
     } catch (error) {
+      console.error(error)
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
           error: 'Could not create user',
+          displayMessage: 'Houve um problema ao criar usuário',
+          detailedMessage: error
         },
         HttpStatus.BAD_REQUEST,
       );
