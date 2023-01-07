@@ -4,7 +4,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { User } from '../types/User';
 import { v4 as uuid } from 'uuid';
 
-let testingExpense = {
+const testingExpense = {
   id: uuid(),
   userId: '',
   description: 'test expense',

@@ -18,6 +18,7 @@ export class UserService {
       });
     } catch (error) {
       console.error(error);
+      return error
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
