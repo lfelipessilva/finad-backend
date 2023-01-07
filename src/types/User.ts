@@ -9,4 +9,3 @@ export type User = {
   created_at: Date;
   updated_at: Date;
 };
-  

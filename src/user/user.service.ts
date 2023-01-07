@@ -17,13 +17,13 @@ export class UserService {
         data: user,
       });
     } catch (error) {
-      console.error(error)
+      console.error(error);
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
           error: 'Could not create user',
           displayMessage: 'Houve um problema ao criar usuário',
-          detailedMessage: error
+          detailedMessage: error,
         },
         HttpStatus.BAD_REQUEST,
       );
@@ -49,6 +49,14 @@ export class UserService {
       return await this.prisma.user.findUnique({
         where: {
           id: id,
+        },
+        include: {
+          incomes: {
+            take: 20,
+          },
+          expenses: {
+            take: 20,
+          },
         },
       });
     } catch (error) {

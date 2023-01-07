@@ -18,10 +18,10 @@ describe('UserService', () => {
   let userService: UserService;
   let prismaService: PrismaService;
   let authService: AuthService;
-  let jwtService: JwtService
+  let jwtService: JwtService;
 
   beforeEach(async () => {
-    jwtService = new JwtService()
+    jwtService = new JwtService();
     prismaService = new PrismaService();
     userService = new UserService(prismaService);
     authService = new AuthService(userService, jwtService);

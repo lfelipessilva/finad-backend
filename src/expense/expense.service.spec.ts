@@ -9,7 +9,7 @@ let testingExpense = {
   userId: '',
   description: 'test expense',
   value: 120,
-  date: new Date("December 14, 2004 03:24:00"),
+  date: new Date('December 14, 2004 03:24:00'),
   created_at: new Date(Date.now()),
   updated_at: new Date(Date.now()),
 };
@@ -36,13 +36,12 @@ describe('ExpenseService', () => {
     userService = new UserService(prismaService);
 
     user = await userService.create(userForTest);
-    testingExpense.userId = user.id
+    testingExpense.userId = user.id;
   });
 
   it('should be defined', () => {
     expect(expenseService).toBeDefined();
   });
-
 
   it('should create an expense', async () => {
     const createdExpense = await expenseService.create(testingExpense);
@@ -66,9 +65,12 @@ describe('ExpenseService', () => {
     const expenseDataToUpdate = {
       description: 'updated expense description',
       value: 240,
-      date: new Date("July 25, 2001 08:24:00"),
+      date: new Date('July 25, 2001 08:24:00'),
     };
-    const updatedExpense = await expenseService.update(expenseId, expenseDataToUpdate);
+    const updatedExpense = await expenseService.update(
+      expenseId,
+      expenseDataToUpdate,
+    );
 
     expect(updatedExpense.date).not.toEqual(testingExpense.date);
     expect(updatedExpense.description).toEqual('updated expense description');

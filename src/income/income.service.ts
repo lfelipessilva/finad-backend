@@ -6,7 +6,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class IncomeService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(income: Income): Promise<Income> {
     try {
@@ -60,8 +60,8 @@ export class IncomeService {
     try {
       return await this.prisma.income.findMany({
         where: {
-          userId: userId
-        }
+          userId: userId,
+        },
       });
     } catch (error) {
       throw new HttpException(
@@ -99,8 +99,8 @@ export class IncomeService {
     try {
       return await this.prisma.income.delete({
         where: {
-          id: id
-        }
+          id: id,
+        },
       });
     } catch (error) {
       throw new HttpException(

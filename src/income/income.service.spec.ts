@@ -9,7 +9,7 @@ let testingIncome = {
   userId: '',
   description: 'test income',
   value: 120,
-  date: new Date("December 14, 2004 03:24:00"),
+  date: new Date('December 14, 2004 03:24:00'),
   created_at: new Date(Date.now()),
   updated_at: new Date(Date.now()),
 };
@@ -36,13 +36,12 @@ describe('IncomeService', () => {
     userService = new UserService(prismaService);
 
     user = await userService.create(userForTest);
-    testingIncome.userId = user.id
+    testingIncome.userId = user.id;
   });
 
   it('should be defined', () => {
     expect(incomeService).toBeDefined();
   });
-
 
   it('should create an income', async () => {
     const createdIncome = await incomeService.create(testingIncome);
@@ -66,9 +65,12 @@ describe('IncomeService', () => {
     const incomeDataToUpdate = {
       description: 'updated income description',
       value: 240,
-      date: new Date("July 25, 2001 08:24:00"),
+      date: new Date('July 25, 2001 08:24:00'),
     };
-    const updatedIncome = await incomeService.update(incomeId, incomeDataToUpdate);
+    const updatedIncome = await incomeService.update(
+      incomeId,
+      incomeDataToUpdate,
+    );
 
     expect(updatedIncome.date).not.toEqual(testingIncome.date);
     expect(updatedIncome.description).toEqual('updated income description');
