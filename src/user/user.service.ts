@@ -13,12 +13,12 @@ export class UserService {
       const hashedPass = await bcrypt.hash(user.password, 12);
       user.password = hashedPass;
 
+      return user
       return await this.prisma.user.create({
         data: user,
       });
     } catch (error) {
       console.error(error);
-      return error
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
