@@ -12,7 +12,7 @@ async function bootstrap() {
 
   app.enableCors({ 
     origin: 'https://finad.devluis.tech',
-    allowedHeaders: ['Access-Control-Request-Headers', 'Content-Type']
+    allowedHeaders: ['Access-Control-Request-Headers', 'Access-Control-Allow-Headers', 'Access-Control-Request-Method', 'Content-Type']
   });
 
   await app.listen(process.env.PORT || 8888);
