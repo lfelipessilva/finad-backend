@@ -26,8 +26,9 @@ export class UserController {
   ) {}
 
   @Post()
-  create(@Body() requestUser: CreateUserDto) {
-    return {name: 'fulano de tal'}
+  create(@Request() req) {
+    return req
+    return requestUser
     const user = {
       id: uuid(),
       email: requestUser.email,
