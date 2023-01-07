@@ -7,7 +7,7 @@ async function bootstrap() {
     preflightContinue: true,
     origin: 'https://finad.devluis.tech',
     allowedHeaders: [
-      'Access-Control-Allow-Haders', 'Content-Type',
+      'Access-Control-Allow-Headers', 'Content-Type',
       'Access-Control-Request-Headers',  'Content-Type'
     ],
     methods: ['GET',  'POST', 'PUT', 'DELETE'],
