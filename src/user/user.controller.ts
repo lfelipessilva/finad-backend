@@ -29,7 +29,7 @@ export class UserController {
   create(@Request() req) {
     console.log(req.body)
 
-    return { john: 'doe', ...req.body}
+    return { john: 'doe', ...req.route}
     // return requestUser
     // const user = {
     //   id: uuid(),
