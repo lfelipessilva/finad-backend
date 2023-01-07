@@ -9,7 +9,7 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async create(user: User): Promise<User> {
-    try {
+    // try {
       const hashedPass = await bcrypt.hash(user.password, 12);
       user.password = hashedPass;
 
@@ -17,18 +17,18 @@ export class UserService {
       return await this.prisma.user.create({
         data: user,
       });
-    } catch (error) {
-      console.error(error);
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Could not create user',
-          displayMessage: 'Houve um problema ao criar usuário',
-          detailedMessage: error,
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
+    // } catch (error) {
+    //   console.error(error);
+    //   throw new HttpException(
+    //     {
+    //       status: HttpStatus.BAD_REQUEST,
+    //       error: 'Could not create user',
+    //       displayMessage: 'Houve um problema ao criar usuário',
+    //       detailedMessage: error,
+    //     },
+    //     HttpStatus.BAD_REQUEST,
+    //   );
+    // }
   }
 
   async findAll(): Promise<User[]> {
