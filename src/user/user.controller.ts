@@ -27,6 +27,7 @@ export class UserController {
 
   @Post()
   create(@Body() requestUser: CreateUserDto) {
+    return requestUser
     const user = {
       id: uuid(),
       email: requestUser.email,
@@ -37,6 +38,7 @@ export class UserController {
       updated_at: new Date(Date.now()),
     } as User;
 
+    return user
     return this.userService.create(user);
   }
 
