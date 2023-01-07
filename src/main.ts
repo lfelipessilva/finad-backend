@@ -10,7 +10,6 @@ async function bootstrap() {
       'Access-Control-Allow-Headers', 'Content-Type',
       'Access-Control-Request-Headers',  'Content-Type'
     ],
-    methods: ['GET',  'POST', 'PUT', 'DELETE'],
   });
   await app.listen(8888);
 }
