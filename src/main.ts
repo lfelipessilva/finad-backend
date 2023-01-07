@@ -5,7 +5,9 @@ import { json, urlencoded } from 'express'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(json())
+  app.use(json({
+    type: ['application/json', 'text/plain']
+  }))
   app.use(urlencoded({ extended: true }))
 
   app.enableCors({ 
