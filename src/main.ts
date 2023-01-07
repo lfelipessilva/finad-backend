@@ -5,7 +5,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({ 
     preflightContinue: true,
-    origin: '*',
+    origin: 'https://finad.devluis.tech',
     allowedHeaders: ['Content-Type', 'application/json'],
     methods: ['GET',  'POST', 'PUT', 'DELETE'],
   });
