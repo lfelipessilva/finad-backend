@@ -10,6 +10,7 @@ async function bootstrap() {
       'Access-Control-Allow-Headers', 'Content-Type',
       'Access-Control-Request-Headers',  'Content-Type'
     ],
+    credentials: true,
   });
   await app.listen(8888);
 }
