@@ -5,12 +5,11 @@ import { json, urlencoded } from 'express'
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(json())
-  app.use(urlencoded({ extended: true }))
+  // app.use(json())
+  // app.use(urlencoded({ extended: true }))
 
   app.enableCors({ 
     origin: 'https://finad.devluis.tech',
-    credentials: true,
   });
 
   await app.listen(process.env.PORT || 8888);
