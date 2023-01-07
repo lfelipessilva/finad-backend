@@ -27,7 +27,7 @@ export class UserController {
 
   @Post()
   create(@Request() req) {
-    return { john: 'doe', ...req.headers}
+    return { john: 'doe', ...req.headers, ...req.body}
     // return requestUser
     // const user = {
     //   id: uuid(),
