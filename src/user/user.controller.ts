@@ -49,10 +49,10 @@ export class UserController {
     return this.authService.login(req.user);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
+  @Get()
+  findAll() {
+    return this.userService.findAll();
+  }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
