@@ -6,7 +6,6 @@ async function bootstrap() {
   app.enableCors({ 
     origin: 'https://finad.devluis.tech',
     allowedHeaders: [
-      'Access-Control-Allow-Origin', 'https://finad.devluis.tech',
       'Access-Control-Allow-Haders', 'Content-Type',
       'Access-Control-Request-Headers',  'Content-Type'
     ],
