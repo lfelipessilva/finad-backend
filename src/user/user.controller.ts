@@ -32,8 +32,6 @@ export class UserController {
       email: requestUser.email,
       name: requestUser.name,
       password: requestUser.password,
-      income: [],
-      expense: [],
       money: 0,
       created_at: new Date(Date.now()),
       updated_at: new Date(Date.now()),

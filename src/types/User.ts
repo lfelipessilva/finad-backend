@@ -5,7 +5,7 @@ export type User = {
   name: string;
   money: number;
   income?: any[];
-  expense?: any[];
+  expenses?: any[];
   created_at: Date;
   updated_at: Date;
 };
