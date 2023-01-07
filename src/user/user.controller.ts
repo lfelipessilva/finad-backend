@@ -27,20 +27,22 @@ export class UserController {
 
   @Post()
   create(@Request() req) {
-    return req
-    return requestUser
-    const user = {
-      id: uuid(),
-      email: requestUser.email,
-      name: requestUser.name,
-      password: requestUser.password,
-      money: 0,
-      created_at: new Date(Date.now()),
-      updated_at: new Date(Date.now()),
-    } as User;
+    console.log(req.body)
 
-    return user
-    return this.userService.create(user);
+    return { john: 'doe', ...req.body}
+    // return requestUser
+    // const user = {
+    //   id: uuid(),
+    //   email: requestUser.email,
+    //   name: requestUser.name,
+    //   password: requestUser.password,
+    //   money: 0,
+    //   created_at: new Date(Date.now()),
+    //   updated_at: new Date(Date.now()),
+    // } as User;
+
+    // return user
+    // return this.userService.create(user);
   }
 
   @UseGuards(LocalAuthGuard)
