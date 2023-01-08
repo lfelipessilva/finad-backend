@@ -1,16 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { json, urlencoded } from 'express'
+import { json, urlencoded } from 'express';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(json({
-    type: ['application/json', 'text/plain']
-  }))
-  app.use(urlencoded({ extended: true }))
+  app.use(
+    json({
+      type: ['application/json', 'text/plain'],
+    }),
+  );
+  app.use(urlencoded({ extended: true }));
 
-  app.enableCors({ 
+  app.use(function (req, res, next) {
+    res.setHeader('Content-Type', 'application/json');
+    return next();
+  });
+
+  app.enableCors({
     origin: 'https://finad.devluis.tech',
   });
 
