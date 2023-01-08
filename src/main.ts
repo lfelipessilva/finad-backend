@@ -15,8 +15,9 @@ async function bootstrap() {
   app.use(urlencoded({ extended: true }));
 
   app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Request-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    res.setHeader('Access-Control-Request-Method', '*');
+    res.setHeader('Access-Control-Request-Headers', '*');	
     return next();
   });
 
