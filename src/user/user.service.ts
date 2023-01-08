@@ -9,26 +9,25 @@ export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async create(user: User): Promise<User> {
-    // try {
+    try {
     const hashedPass = await bcrypt.hash(user.password, 12);
     user.password = hashedPass;
 
-    return user;
     return await this.prisma.user.create({
       data: user,
     });
-    // } catch (error) {
-    //   console.error(error);
-    //   throw new HttpException(
-    //     {
-    //       status: HttpStatus.BAD_REQUEST,
-    //       error: 'Could not create user',
-    //       displayMessage: 'Houve um problema ao criar usuário',
-    //       detailedMessage: error,
-    //     },
-    //     HttpStatus.BAD_REQUEST,
-    //   );
-    // }
+    } catch (error) {
+      console.error(error);
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          message: 'Could not create user',
+          displayMessage: 'Houve um problema ao criar usuário',
+          detailedMessage: error,
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
   }
 
   async findAll(): Promise<User[]> {
@@ -38,7 +37,9 @@ export class UserService {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: 'Could not find users',
+          message: 'Could not find users',
+          displayMessage: 'Houve um problema ao encontrar usuários',
+          detailedMessage: error,
         },
         HttpStatus.NOT_FOUND,
       );
@@ -64,7 +65,9 @@ export class UserService {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: 'Could not find user',
+          message: 'Could not find user',
+          displayMessage: 'Houve um problema ao encontrar usuário',
+          detailedMessage: error,
         },
         HttpStatus.NOT_FOUND,
       );
@@ -82,7 +85,9 @@ export class UserService {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: 'Could not find user',
+          message: 'Could not find user',
+          displayMessage: 'Houve um problema ao encontrar usuário',
+          detailedMessage: error,
         },
         HttpStatus.NOT_FOUND,
       );
@@ -103,7 +108,9 @@ export class UserService {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
-          error: 'Could not update user',
+          message: 'Could not update user',
+          displayMessage: 'Houve um problema ao atualizar usuário',
+          detailedMessage: error,
         },
         HttpStatus.BAD_REQUEST,
       );
@@ -121,7 +128,9 @@ export class UserService {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
-          error: 'Could not delete user',
+          message: 'Could not delete user',
+          displayMessage: 'Houve um problema ao excluir usuário',
+          detailedMessage: error,
         },
         HttpStatus.BAD_REQUEST,
       );
