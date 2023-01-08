@@ -18,6 +18,7 @@ async function bootstrap() {
   });
 
   app.enableCors({
+    allowedHeaders: ['Content-Type'],
     origin: 'https://finad.devluis.tech',
   });
 
