@@ -10,12 +10,12 @@ export class UserService {
 
   async create(user: User): Promise<User> {
     try {
-    const hashedPass = await bcrypt.hash(user.password, 12);
-    user.password = hashedPass;
+      const hashedPass = await bcrypt.hash(user.password, 12);
+      user.password = hashedPass;
 
-    return await this.prisma.user.create({
-      data: user,
-    });
+      return await this.prisma.user.create({
+        data: user,
+      });
     } catch (error) {
       console.error(error);
       throw new HttpException(

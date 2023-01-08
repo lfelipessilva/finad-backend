@@ -3,8 +3,9 @@ import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from '../types/User';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-//automatically authenticates user with passport-js
 @Injectable()
 export class AuthService {
   constructor(
@@ -14,12 +15,12 @@ export class AuthService {
 
   async validateUser(email: string, pass: string): Promise<User | null> {
     const user = await this.userService.findByEmail(email);
-    if (user) {
-      if (await bcrypt.compare(pass, user.password)) {
-        return user;
-      }
-      return null;
+    if (!user) return null;
+
+    if (await bcrypt.compare(pass, user.password)) {
+      return user;
     }
+
     return null;
   }
 
@@ -28,13 +29,31 @@ export class AuthService {
       id: user.id,
       name: user.name,
       email: user.email,
-      created_at: user.created_at,
-      updated_at: user.updated_at,
     };
+
+    const token = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: '15min',
+    });
 
     return {
       user,
-      token: this.jwtService.sign(payload),
+      token,
+    };
+  }
+
+  async refresh(user: any) {
+    const payload = {
+      email: user.email,
+    };
+
+    const refreshToken = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_REFRESH_SECRET,
+      expiresIn: '30d',
+    });
+
+    return {
+      refreshToken,
     };
   }
 }
