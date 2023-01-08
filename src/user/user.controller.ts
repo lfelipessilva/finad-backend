@@ -26,11 +26,6 @@ export class UserController {
     private readonly authService: AuthService,
   ) {}
 
-  @Options()
-  preflight(@Request() req) {
-    return { john: 'doe', ...req.headers, ...req.body };
-  }
-
   @Post()
   create(@Request() req) {
     return { john: 'doe', ...req.headers, ...req.body };
