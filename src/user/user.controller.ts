@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Request,
+  Options,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AuthService } from '../auth/auth.service';
@@ -24,6 +25,11 @@ export class UserController {
     private readonly userService: UserService,
     private readonly authService: AuthService,
   ) {}
+
+  @Options()
+  preflight(@Request() req) {
+    return { john: 'doe', ...req.headers, ...req.body };
+  }
 
   @Post()
   create(@Request() req) {
