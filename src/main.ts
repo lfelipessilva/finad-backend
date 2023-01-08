@@ -12,10 +12,10 @@ async function bootstrap() {
   );
   app.use(urlencoded({ extended: true }));
 
-  app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    return next();
-  });
+  // app.use(functio_n (req, res, next) {
+  //   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  //   return next();
+  // });
 
   app.enableCors({
     allowedHeaders: ['Content-Type'],
