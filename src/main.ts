@@ -5,14 +5,16 @@ import { json, urlencoded } from 'express';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.use(
-    json({
-      type: ['application/json', 'text/plain'],
-    }),
-  );
+  // app.use(
+  //   json({
+  //     type: ['application/json', 'text/plain'],
+  //   }),
+  // );
+
+  app.use(json())
   app.use(urlencoded({ extended: true }));
 
-  // app.use(functio_n (req, res, next) {
+  // app.use(function (req, res, next) {
   //   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   //   return next();
   // });
