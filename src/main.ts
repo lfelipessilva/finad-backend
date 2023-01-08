@@ -14,13 +14,13 @@ async function bootstrap() {
   app.use(json())
   app.use(urlencoded({ extended: true }));
 
-  // app.use(function (req, res, next) {
-  //   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  //   return next();
-  // });
+  app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    return next();
+  });
 
   app.enableCors({
-    allowedHeaders: ['content-type'],
+    // allowedHeaders: ['content-type'],
     origin: 'https://finad.devluis.tech',
   });
 
