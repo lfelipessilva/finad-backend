@@ -7,14 +7,10 @@ import {
   Param,
   Delete,
   UseGuards,
-  Request,
-  Options,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { AuthService } from '../auth/auth.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { v4 as uuid } from 'uuid';
-import { LocalAuthGuard } from '../auth/local-auth.guard';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from '../types/User';
@@ -23,7 +19,6 @@ import { User } from '../types/User';
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly authService: AuthService,
   ) {}
 
   @Post()
@@ -39,12 +34,6 @@ export class UserController {
     } as User;
 
     return this.userService.create(user);
-  }
-
-  @UseGuards(LocalAuthGuard)
-  @Post('/auth')
-  login(@Request() req) {
-    return this.authService.login(req.user);
   }
 
   @Get()
