@@ -33,12 +33,18 @@ export class AuthService {
 
     const token = await this.jwtService.signAsync(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: '15min',
+      expiresIn: '15minutes',
+    });
+
+    const refreshToken = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_REFRESH_SECRET,
+      expiresIn: '30days',
     });
 
     return {
       user,
       token,
+      refreshToken,
     };
   }
 
@@ -47,13 +53,13 @@ export class AuthService {
       email: user.email,
     };
 
-    const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_REFRESH_SECRET,
-      expiresIn: '30d',
+    const accessToken = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_SECRET,
+      expiresIn: '15minutes',
     });
 
     return {
-      refreshToken,
+      accessToken,
     };
   }
 }
