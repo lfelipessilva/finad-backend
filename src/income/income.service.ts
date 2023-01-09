@@ -1,5 +1,4 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { CreateIncomeDto } from './dto/create-income.dto';
 import { Income } from '@prisma/client';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 import { PrismaService } from '../../prisma/prisma.service';

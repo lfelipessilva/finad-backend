@@ -12,7 +12,7 @@ import {
 import { IncomeService } from './income.service';
 import { CreateIncomeDto } from './dto/create-income.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
 import { Income } from '../types/Income';
 @Controller('income')
@@ -41,10 +41,11 @@ export class IncomeController {
     return this.incomeService.create(income);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.incomeService.findAll();
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  findAll() {
+    return this.incomeService.findAll();
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

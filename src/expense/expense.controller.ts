@@ -12,7 +12,7 @@ import {
 import { ExpenseService } from './expense.service';
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
 import { Expense } from '../types/Expense';
 @Controller('expense')
