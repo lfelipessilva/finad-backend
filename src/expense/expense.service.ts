@@ -23,9 +23,9 @@ export class ExpenseService {
     }
   }
 
-  async findAll(): Promise<Expense[]> {
+  async findAll(filters): Promise<Expense[]> {
     try {
-      return await this.prisma.expense.findMany();
+      return await this.prisma.expense.findMany(filters);
     } catch (error) {
       throw new HttpException(
         {

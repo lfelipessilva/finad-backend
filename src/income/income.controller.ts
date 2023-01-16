@@ -43,8 +43,12 @@ export class IncomeController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.incomeService.findAll();
+  findAll(@Request() req) {
+    return this.incomeService.findAll({
+      where: {
+        userId: req.user.id,
+      },
+    });
   }
 
   @Get(':id')

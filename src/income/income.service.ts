@@ -23,10 +23,11 @@ export class IncomeService {
     }
   }
 
-  async findAll(): Promise<Income[]> {
+  async findAll(filters): Promise<Income[]> {
     try {
-      return await this.prisma.income.findMany();
+      return await this.prisma.income.findMany(filters);
     } catch (error) {
+      console.error(error);
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,

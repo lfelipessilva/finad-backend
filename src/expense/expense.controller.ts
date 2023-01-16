@@ -41,10 +41,13 @@ export class ExpenseController {
     return this.expenseService.create(expense);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.expenseService.findAll();
-  // }
+  @Get()
+  findAll(@Request() req) {
+    return this.expenseService.findAll({
+      where: {
+        userId: req.user.id
+      }
+    });  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
