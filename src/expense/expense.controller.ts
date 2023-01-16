@@ -17,7 +17,7 @@ import { v4 as uuid } from 'uuid';
 import { Expense } from '../types/Expense';
 @Controller('expense')
 export class ExpenseController {
-  constructor(private readonly expenseService: ExpenseService) {}
+  constructor(private readonly expenseService: ExpenseService) { }
 
   @UseGuards(JwtAuthGuard)
   @Get('/user')
@@ -41,13 +41,15 @@ export class ExpenseController {
     return this.expenseService.create(expense);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Request() req) {
     return this.expenseService.findAll({
       where: {
         userId: req.user.id
       }
-    });  }
+    });
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

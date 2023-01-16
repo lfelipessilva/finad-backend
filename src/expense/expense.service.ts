@@ -27,6 +27,7 @@ export class ExpenseService {
     try {
       return await this.prisma.expense.findMany(filters);
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
