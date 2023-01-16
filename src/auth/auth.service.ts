@@ -26,9 +26,7 @@ export class AuthService {
 
   async login(user: any) {
     const payload = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
+      ...user,
     };
 
     const token = await this.jwtService.signAsync(payload, {
@@ -36,10 +34,13 @@ export class AuthService {
       expiresIn: '15minutes',
     });
 
-    const refreshToken = await this.jwtService.signAsync(payload, {
-      secret: process.env.JWT_REFRESH_SECRET,
-      expiresIn: '30days',
-    });
+    const refreshToken = await this.jwtService.signAsync(
+      { id: user.id, email: user.email },
+      {
+        secret: process.env.JWT_REFRESH_SECRET,
+        expiresIn: '30days',
+      },
+    );
 
     return {
       user,
