@@ -1,6 +1,6 @@
 export class CreateTransactionDto {
-  status: string;
-  type: string;
+  status: 'paid' | 'unpaid';
+  type: 'income' | 'expense';
   description: string;
   categoryId?: string;
   value: number;

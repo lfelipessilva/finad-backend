@@ -3,7 +3,7 @@ import { CreateTransactionDto } from './create-transaction.dto';
 
 export class UpdateTransactionDto extends PartialType(CreateTransactionDto) {
   value?: number;
-  status?: string;
+  status?: 'paid' | 'unpaid';
   description?: string;
   categoryId?: string;
   date?: Date;
