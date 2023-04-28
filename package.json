@@ -22,7 +22,8 @@
     "migrate:postgres": "dotenv -e .env.development yarn prisma migrate dev",
     "db:test:push": "dotenv -e .env.test yarn prisma db push",
     "db:dev:push": "dotenv -e .env.development yarn prisma db push",
-    "db:prod:push": "dotenv -e .env.production yarn prisma db push"
+    "db:prod:push": "dotenv -e .env.production yarn prisma db push",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@nestjs/common": "^9.4.0",
