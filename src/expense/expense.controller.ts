@@ -17,7 +17,7 @@ import { v4 as uuid } from 'uuid';
 import { Expense } from '../types/Expense';
 @Controller('expense')
 export class ExpenseController {
-  constructor(private readonly expenseService: ExpenseService) { }
+  constructor(private readonly expenseService: ExpenseService) {}
 
   @UseGuards(JwtAuthGuard)
   @Get('/user')
@@ -33,7 +33,8 @@ export class ExpenseController {
       userId: req.user.id,
       description: expenseRequest.description,
       value: expenseRequest.value,
-      date: expenseRequest.date,
+      status: expenseRequest.status,
+      date: new Date(expenseRequest.date),
       created_at: new Date(Date.now()),
       updated_at: new Date(Date.now()),
     } as Expense;
@@ -46,8 +47,8 @@ export class ExpenseController {
   findAll(@Request() req) {
     return this.expenseService.findAll({
       where: {
-        userId: req.user.id
-      }
+        userId: req.user.id,
+      },
     });
   }
 

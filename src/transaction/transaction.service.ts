@@ -75,7 +75,10 @@ export class TransactionService {
     }
   }
 
-  async update(id: string, updateData: UpdateTransactionDto): Promise<Transaction> {
+  async update(
+    id: string,
+    updateData: UpdateTransactionDto,
+  ): Promise<Transaction> {
     try {
       return await this.prisma.transaction.update({
         where: {

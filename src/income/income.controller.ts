@@ -33,6 +33,7 @@ export class IncomeController {
       userId: req.user.id,
       description: incomeRequest.description,
       value: incomeRequest.value,
+      status: incomeRequest.status,
       date: new Date(incomeRequest.date),
       created_at: new Date(Date.now()),
       updated_at: new Date(Date.now()),

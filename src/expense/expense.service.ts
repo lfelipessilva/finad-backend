@@ -7,12 +7,28 @@ import { PrismaService } from '../../prisma/prisma.service';
 export class ExpenseService {
   constructor(private prisma: PrismaService) {}
 
-  async create(expense: Expense): Promise<Expense> {
+  async create(expense: Expense) {
     try {
-      return await this.prisma.expense.create({
+      const createExpense = this.prisma.expense.create({
         data: expense,
       });
+
+      const createTransaction = this.prisma.transaction.create({
+        data: {
+          id: expense.id,
+          userId: expense.userId,
+          status: expense.status,
+          type: 'expense',
+          value: expense.value,
+          date: expense.date,
+          created_at: expense.created_at,
+          updated_at: expense.updated_at,
+        },
+      });
+
+      await this.prisma.$transaction([createExpense, createTransaction]);
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
