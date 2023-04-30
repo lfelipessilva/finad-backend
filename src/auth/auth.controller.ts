@@ -56,4 +56,11 @@ export class AuthController {
 
     return res.send();
   }
+
+  @Post('/logout')
+  async logout(@Request() req, @Response() res) {
+    res.cookie('accessToken', '');
+    res.cookie('refreshToken', '');
+    return res.send();
+  }
 }
