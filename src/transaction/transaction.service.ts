@@ -73,8 +73,9 @@ export class TransactionService {
         JOIN Income
           ON Transaction.id = Income.id
         WHERE Transaction.userId = ${userId}
-        `;
 
+        ORDER BY date ASC
+        `;
     } catch (error) {
       console.log(error);
       throw new HttpException(
