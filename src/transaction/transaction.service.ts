@@ -57,7 +57,7 @@ export class TransactionService {
     }
   }
 
-  async findFromUserById(userId: string) {
+  async findFromUserById(userId: string, filters: any) {
     try {
       return this.prisma.$queryRaw`
         SELECT Transaction.*, Expense.description 
@@ -65,6 +65,8 @@ export class TransactionService {
         JOIN Expense
           ON Transaction.id = Expense.id
         WHERE Transaction.userId = ${userId}
+          AND MONTH(Transaction.date) = ${filters.month}
+          AND YEAR(Transaction.date) = ${filters.year}
 
         UNION ALL
         
@@ -73,6 +75,8 @@ export class TransactionService {
         JOIN Income
           ON Transaction.id = Income.id
         WHERE Transaction.userId = ${userId}
+          AND MONTH(Transaction.date) = ${filters.month}
+          AND YEAR(Transaction.date) = ${filters.year}
 
         ORDER BY date ASC
         `;
