@@ -60,17 +60,21 @@ export class TransactionService {
   async findFromUserById(userId: string) {
     try {
       return this.prisma.$queryRaw`
-        SELECT 
-          "public"."Transaction"."id",
-          "public"."Transaction"."userId",
-          "public"."Transaction"."type",
-          "public"."Income"."description",
-          "public"."Expense"."description"
-        FROM "public"."Transaction"
-        LEFT JOIN "public"."Income" ON "Transaction"."id" = "Income"."id"
-        LEFT JOIN "public"."Expense" ON  "Transaction"."id" = "Expense"."id"
-        WHERE "Transaction"."userId" = ${userId}
+        SELECT Transaction.*, Expense.description 
+        FROM Transaction        
+        JOIN Expense
+          ON Transaction.id = Expense.id
+        WHERE Transaction.userId = ${userId}
+
+        UNION ALL
+        
+        SELECT Transaction.*, Income.description 
+        FROM Transaction  
+        JOIN Income
+          ON Transaction.id = Income.id
+        WHERE Transaction.userId = ${userId}
         `;
+
     } catch (error) {
       console.log(error);
       throw new HttpException(
