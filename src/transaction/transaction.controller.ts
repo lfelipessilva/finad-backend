@@ -42,7 +42,7 @@ export class TransactionController {
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Request() req) {
-    const filters = req.query
+    const filters = req.query;
     console.log(req.query);
     return this.transactionService.findFromUserById(req.user.id, filters);
   }
