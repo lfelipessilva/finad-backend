@@ -7,6 +7,7 @@ import { IncomeModule } from './income/income.module';
 import { ExpenseModule } from './expense/expense.module';
 import { AuthModule } from './auth/auth.module';
 import { TransactionModule } from './transaction/transaction.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TransactionModule } from './transaction/transaction.module';
     IncomeModule,
     ExpenseModule,
     TransactionModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
