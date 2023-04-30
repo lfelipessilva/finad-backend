@@ -43,7 +43,6 @@ export class TransactionController {
   @Get()
   findAll(@Request() req) {
     const filters = req.query;
-    console.log(req.query);
     return this.transactionService.findFromUserById(req.user.id, filters);
   }
 
