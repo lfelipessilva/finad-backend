@@ -42,11 +42,7 @@ export class TransactionController {
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Request() req) {
-    return this.transactionService.findAll({
-      where: {
-        userId: req.user.id,
-      },
-    });
+    return this.transactionService.findFromUserById(req.user.id);
   }
 
   @Get(':id')

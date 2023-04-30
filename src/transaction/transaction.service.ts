@@ -1,11 +1,11 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { Transaction } from '@prisma/client';
+import { Transaction, Expense, Prisma } from '@prisma/client';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class TransactionService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(transaction: Transaction): Promise<Transaction> {
     try {
@@ -59,12 +59,20 @@ export class TransactionService {
 
   async findFromUserById(userId: string) {
     try {
-      return await this.prisma.transaction.findMany({
-        where: {
-          userId: userId,
-        },
-      });
+      return this.prisma.$queryRaw`
+        SELECT 
+          "public"."Transaction"."id",
+          "public"."Transaction"."userId",
+          "public"."Transaction"."type",
+          "public"."Income"."description",
+          "public"."Expense"."description"
+        FROM "public"."Transaction"
+        LEFT JOIN "public"."Income" ON "Transaction"."id" = "Income"."id"
+        LEFT JOIN "public"."Expense" ON  "Transaction"."id" = "Expense"."id"
+        WHERE "Transaction"."userId" = ${userId}
+        `;
     } catch (error) {
+      console.log(error);
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
