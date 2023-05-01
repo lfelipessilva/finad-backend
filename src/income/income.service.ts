@@ -14,17 +14,20 @@ export class IncomeService {
       });
 
       const createTransaction = this.prisma.transaction.create({
-        data: transaction
+        data: transaction,
       });
 
-      const query = await this.prisma.$transaction([createTransaction, createIncome]);
-      return query[0]
+      const query = await this.prisma.$transaction([
+        createTransaction,
+        createIncome,
+      ]);
+      return query[0];
     } catch (error) {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
           error: 'Could not create income',
-          message: error.message
+          message: error.message,
         },
         HttpStatus.BAD_REQUEST,
       );

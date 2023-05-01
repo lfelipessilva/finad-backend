@@ -5,7 +5,7 @@ import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class ExpenseService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(expense: Expense, transaction: Transaction) {
     try {
@@ -17,8 +17,11 @@ export class ExpenseService {
         data: expense,
       });
 
-      const query = await this.prisma.$transaction([createTransaction, createExpense]);
-      return query[0]
+      const query = await this.prisma.$transaction([
+        createTransaction,
+        createExpense,
+      ]);
+      return query[0];
     } catch (error) {
       console.log(error);
       throw new HttpException(
