@@ -46,6 +46,16 @@ export class TransactionController {
     return this.transactionService.findFromUserById(req.user.id, filters);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('balance')
+  findBalance(@Request() req) {
+    const userId = req.user.id;
+    const dateStart = req.query.dateStart;
+    const dateEnd = req.query.dateEnd;
+
+    return this.transactionService.findBalance(userId, dateStart, dateEnd);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.transactionService.findOne(id);

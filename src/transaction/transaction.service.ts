@@ -1,5 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { Transaction, Expense, Prisma } from '@prisma/client';
+import { Transaction } from '@prisma/client';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 
@@ -65,7 +65,7 @@ export class TransactionService {
           date: {
             gte: new Date(filters.dateStart),
             lte: new Date(filters.dateEnd),
-          }
+          },
         },
         include: {
           category: {
@@ -73,20 +73,59 @@ export class TransactionService {
               id: true,
               name: true,
               icon: true,
-              type: true, 
-            }
-          }
+              type: true,
+            },
+          },
         },
         orderBy: {
-          date: 'asc'
-        }
-      })
+          date: 'asc',
+        },
+        take: 20,
+      });
     } catch (error) {
       console.log(error);
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
           error: 'Could not find user transactions',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  async findBalance(userId: string, dateStart: Date, dateEnd: Date) {
+    try {
+      const query = await this.prisma.transaction.groupBy({
+        by: ['type'],
+        where: {
+          userId: userId,
+          date: {
+            gte: new Date(dateStart),
+            lte: new Date(dateEnd),
+          },
+        },
+        _sum: {
+          value: true,
+        },
+      });
+
+      const expense = query?.[0]?.['_sum']?.value ?? 0;
+      const income = query?.[1]?.['_sum']?.value ?? 0;
+
+      return {
+        expense,
+        income,
+        balance: (income ?? 0) - (expense ?? 0),
+      };
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          message: 'Could not find balance',
+          displayMessage: 'Houve um problema ao achar valores nas transaçoes',
+          detailedMessage: error,
         },
         HttpStatus.BAD_REQUEST,
       );
