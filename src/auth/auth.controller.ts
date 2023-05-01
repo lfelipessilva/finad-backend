@@ -9,6 +9,7 @@ import {
 import { AuthService } from '../auth/auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { RefreshAuthGuard } from './guards/refresh-auth.guard';
+import { add } from 'date-fns';
 
 @Controller('auth')
 export class AuthController {
@@ -21,10 +22,8 @@ export class AuthController {
       req.user,
     );
 
-    const ExpirationDate = new Date(new Date().getTime() + 60 * 1000 * 15); // 15 minutes
-    const refreshTokenExpirationDate = new Date(
-      new Date().setDate(new Date().getDate() + 30),
-    ); // 30 days
+    const ExpirationDate = add(new Date(), { minutes: 15}) // 15 minutes
+    const refreshTokenExpirationDate = add(new Date(), { days: 30}) // 30 days
 
     res.cookie('refreshToken', refreshToken, {
       expires: refreshTokenExpirationDate,
