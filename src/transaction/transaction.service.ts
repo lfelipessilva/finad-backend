@@ -59,27 +59,28 @@ export class TransactionService {
 
   async findFromUserById(userId: string, filters: any) {
     try {
-      return this.prisma.$queryRaw`
-        SELECT Transaction.*, Expense.description 
-        FROM Transaction        
-        JOIN Expense
-          ON Transaction.id = Expense.id
-        WHERE Transaction.userId = ${userId}
-          AND MONTH(Transaction.date) = ${filters.month}
-          AND YEAR(Transaction.date) = ${filters.year}
-
-        UNION ALL
-        
-        SELECT Transaction.*, Income.description 
-        FROM Transaction  
-        JOIN Income
-          ON Transaction.id = Income.id
-        WHERE Transaction.userId = ${userId}
-          AND MONTH(Transaction.date) = ${filters.month}
-          AND YEAR(Transaction.date) = ${filters.year}
-
-        ORDER BY date ASC
-        `;
+      return this.prisma.transaction.findMany({
+        where: {
+          userId: userId,
+          date: {
+            gte: new Date(filters.dateStart),
+            lte: new Date(filters.dateEnd),
+          }
+        },
+        include: {
+          category: {
+            select: {
+              id: true,
+              name: true,
+              icon: true,
+              type: true, 
+            }
+          }
+        },
+        orderBy: {
+          date: 'asc'
+        }
+      })
     } catch (error) {
       console.log(error);
       throw new HttpException(
