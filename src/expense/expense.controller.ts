@@ -15,6 +15,7 @@ import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
 import { Expense } from '../types/Expense';
+import { Transaction } from '@prisma/client';
 @Controller('expense')
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
@@ -31,7 +32,6 @@ export class ExpenseController {
     const expense = {
       id: uuid(),
       userId: req.user.id,
-      description: expenseRequest.description,
       value: expenseRequest.value,
       status: expenseRequest.status,
       date: new Date(expenseRequest.date),
@@ -39,7 +39,13 @@ export class ExpenseController {
       updated_at: new Date(Date.now()),
     } as Expense;
 
-    return this.expenseService.create(expense);
+    const transaction = {
+      ...expense,
+      type: 'expense',
+      description: expenseRequest.description,
+    } as Transaction;
+
+    return this.expenseService.create(expense, transaction);
   }
 
   @UseGuards(JwtAuthGuard)

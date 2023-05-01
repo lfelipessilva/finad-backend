@@ -5,7 +5,6 @@ export type Income = {
   date: Date;
   status: string;
   categoryId: string;
-  description: string;
   created_at: Date;
   updated_at: Date;
 };

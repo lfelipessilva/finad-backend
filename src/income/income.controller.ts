@@ -15,6 +15,7 @@ import { UpdateIncomeDto } from './dto/update-income.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
 import { Income } from '../types/Income';
+import { Transaction } from '@prisma/client';
 @Controller('income')
 export class IncomeController {
   constructor(private readonly incomeService: IncomeService) {}
@@ -31,7 +32,6 @@ export class IncomeController {
     const income = {
       id: uuid(),
       userId: req.user.id,
-      description: incomeRequest.description,
       value: incomeRequest.value,
       status: incomeRequest.status,
       date: new Date(incomeRequest.date),
@@ -39,7 +39,13 @@ export class IncomeController {
       updated_at: new Date(Date.now()),
     } as Income;
 
-    return this.incomeService.create(income);
+    const transaction = {
+      ...income,
+      type: 'expense',
+      description: incomeRequest.description,
+    } as Transaction;
+
+    return this.incomeService.create(income, transaction);
   }
 
   @UseGuards(JwtAuthGuard)

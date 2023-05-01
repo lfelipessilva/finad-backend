@@ -4,7 +4,7 @@ export type Transaction = {
   status: string;
   type: string;
   description: string;
-  categoryId: string;
+  categoryId: string | null;
   value: number;
   date: Date;
   created_at: Date;

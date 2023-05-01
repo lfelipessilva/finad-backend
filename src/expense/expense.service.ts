@@ -1,32 +1,24 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { Expense } from '@prisma/client';
+import { Expense, Transaction } from '@prisma/client';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
 export class ExpenseService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
-  async create(expense: Expense) {
+  async create(expense: Expense, transaction: Transaction) {
     try {
+      const createTransaction = this.prisma.transaction.create({
+        data: transaction,
+      });
+
       const createExpense = this.prisma.expense.create({
         data: expense,
       });
 
-      const createTransaction = this.prisma.transaction.create({
-        data: {
-          id: expense.id,
-          userId: expense.userId,
-          status: expense.status,
-          type: 'expense',
-          value: expense.value,
-          date: expense.date,
-          created_at: expense.created_at,
-          updated_at: expense.updated_at,
-        },
-      });
-
-      await this.prisma.$transaction([createExpense, createTransaction]);
+      const query = await this.prisma.$transaction([createTransaction, createExpense]);
+      return query[0]
     } catch (error) {
       console.log(error);
       throw new HttpException(

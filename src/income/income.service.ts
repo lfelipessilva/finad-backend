@@ -1,5 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { Income } from '@prisma/client';
+import { Income, Transaction } from '@prisma/client';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 
@@ -7,31 +7,24 @@ import { PrismaService } from '../../prisma/prisma.service';
 export class IncomeService {
   constructor(private prisma: PrismaService) {}
 
-  async create(income: Income) {
+  async create(income: Income, transaction: Transaction) {
     try {
       const createIncome = this.prisma.income.create({
         data: income,
       });
 
       const createTransaction = this.prisma.transaction.create({
-        data: {
-          id: income.id,
-          userId: income.userId,
-          status: income.status,
-          type: 'income',
-          value: income.value,
-          date: income.date,
-          created_at: income.created_at,
-          updated_at: income.updated_at,
-        },
+        data: transaction
       });
 
-      await this.prisma.$transaction([createIncome, createTransaction]);
+      const query = await this.prisma.$transaction([createTransaction, createIncome]);
+      return query[0]
     } catch (error) {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
           error: 'Could not create income',
+          message: error.message
         },
         HttpStatus.BAD_REQUEST,
       );
