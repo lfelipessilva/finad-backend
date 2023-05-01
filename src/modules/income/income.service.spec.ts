@@ -1,7 +1,7 @@
 import { IncomeService } from './income.service';
 import { UserService } from '../user/user.service';
-import { PrismaService } from '../../prisma/prisma.service';
-import { User } from '../types/User';
+import { PrismaService } from 'prisma/prisma.service';
+import { User } from '../../types/User';
 import { v4 as uuid } from 'uuid';
 
 const testingIncome = {

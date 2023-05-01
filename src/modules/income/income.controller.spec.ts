@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { IncomeController } from './income.controller';
 import { IncomeService } from './income.service';
-import { PrismaModule } from '../../prisma/prisma.module';
+import { PrismaModule } from '../../../prisma/prisma.module';
 
 describe('IncomeController', () => {
   let controller: IncomeController;

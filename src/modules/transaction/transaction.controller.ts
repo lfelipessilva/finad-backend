@@ -14,7 +14,7 @@ import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
-import { Transaction } from '../types/Transaction';
+import { Transaction } from '../../types/Transaction';
 
 @Controller('transaction')
 export class TransactionController {

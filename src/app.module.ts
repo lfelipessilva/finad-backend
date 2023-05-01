@@ -1,13 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './user/user.module';
-import { IncomeModule } from './income/income.module';
-import { ExpenseModule } from './expense/expense.module';
-import { AuthModule } from './auth/auth.module';
-import { TransactionModule } from './transaction/transaction.module';
-import { CategoryModule } from './category/category.module';
+import { UserModule } from './modules/user/user.module';
+import { IncomeModule } from './modules/income/income.module';
+import { ExpenseModule } from './modules/expense/expense.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { TransactionModule } from './modules/transaction/transaction.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -19,7 +17,5 @@ import { CategoryModule } from './category/category.module';
     TransactionModule,
     CategoryModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

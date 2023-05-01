@@ -14,7 +14,7 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
-import { Category } from '../types/Category';
+import { Category } from '../../types/Category';
 @Controller('category')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}

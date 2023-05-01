@@ -1,57 +1,57 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { Expense, Transaction } from '@prisma/client';
-import { UpdateExpenseDto } from './dto/update-expense.dto';
-import { PrismaService } from '../../prisma/prisma.service';
+import { Income, Transaction } from '@prisma/client';
+import { UpdateIncomeDto } from './dto/update-income.dto';
+import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
-export class ExpenseService {
+export class IncomeService {
   constructor(private prisma: PrismaService) {}
 
-  async create(expense: Expense, transaction: Transaction) {
+  async create(income: Income, transaction: Transaction) {
     try {
+      const createIncome = this.prisma.income.create({
+        data: income,
+      });
+
       const createTransaction = this.prisma.transaction.create({
         data: transaction,
       });
 
-      const createExpense = this.prisma.expense.create({
-        data: expense,
-      });
-
       const query = await this.prisma.$transaction([
         createTransaction,
-        createExpense,
+        createIncome,
       ]);
       return query[0];
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
-          error: 'Could not create expense',
+          error: 'Could not create income',
+          message: error.message,
         },
         HttpStatus.BAD_REQUEST,
       );
     }
   }
 
-  async findAll(filters): Promise<Expense[]> {
+  async findAll(filters): Promise<Income[]> {
     try {
-      return await this.prisma.expense.findMany(filters);
+      return await this.prisma.income.findMany(filters);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: 'Could not find expenses',
+          error: 'Could not find incomes',
         },
         HttpStatus.NOT_FOUND,
       );
     }
   }
 
-  async findOne(id: string): Promise<Expense | null> {
+  async findOne(id: string): Promise<Income | null> {
     try {
-      return await this.prisma.expense.findUnique({
+      return await this.prisma.income.findUnique({
         where: {
           id: id,
         },
@@ -60,7 +60,7 @@ export class ExpenseService {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
-          error: 'Could not find expense',
+          error: 'Could not find income',
         },
         HttpStatus.NOT_FOUND,
       );
@@ -69,7 +69,7 @@ export class ExpenseService {
 
   async findFromUserById(userId: string) {
     try {
-      return await this.prisma.expense.findMany({
+      return await this.prisma.income.findMany({
         where: {
           userId: userId,
         },
@@ -78,16 +78,16 @@ export class ExpenseService {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
-          error: 'Could not find user expenses',
+          error: 'Could not find user incomes',
         },
         HttpStatus.BAD_REQUEST,
       );
     }
   }
 
-  async update(id: string, updateData: UpdateExpenseDto): Promise<Expense> {
+  async update(id: string, updateData: UpdateIncomeDto): Promise<Income> {
     try {
-      return await this.prisma.expense.update({
+      return await this.prisma.income.update({
         where: {
           id: id,
         },
@@ -99,7 +99,7 @@ export class ExpenseService {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
-          error: 'Could not update expense',
+          error: 'Could not update income',
         },
         HttpStatus.BAD_REQUEST,
       );
@@ -108,7 +108,7 @@ export class ExpenseService {
 
   async remove(id: string) {
     try {
-      return await this.prisma.expense.delete({
+      return await this.prisma.income.delete({
         where: {
           id: id,
         },
@@ -117,7 +117,7 @@ export class ExpenseService {
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
-          error: 'Could not delete expense',
+          error: 'Could not delete income',
         },
         HttpStatus.BAD_REQUEST,
       );

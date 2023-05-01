@@ -13,7 +13,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { v4 as uuid } from 'uuid';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from '../types/User';
+import { User } from '../../types/User';
 
 @Controller('user')
 export class UserController {

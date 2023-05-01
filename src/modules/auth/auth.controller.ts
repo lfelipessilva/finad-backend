@@ -6,7 +6,7 @@ import {
   Request,
   Response,
 } from '@nestjs/common';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from './auth.service';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { RefreshAuthGuard } from './guards/refresh-auth.guard';
 import { add } from 'date-fns';
