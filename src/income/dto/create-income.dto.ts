@@ -3,4 +3,5 @@ export class CreateIncomeDto {
   description: string;
   date: Date;
   status: 'received' | 'unreceived';
+  categoryId: string | null;
 }

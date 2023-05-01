@@ -35,6 +35,7 @@ export class ExpenseController {
       value: expenseRequest.value,
       status: expenseRequest.status,
       date: new Date(expenseRequest.date),
+      categoryId: expenseRequest.categoryId,
       created_at: new Date(Date.now()),
       updated_at: new Date(Date.now()),
     } as Expense;

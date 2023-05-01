@@ -3,4 +3,5 @@ export class CreateExpenseDto {
   description: string;
   date: Date;
   status: 'paid' | 'unpaid';
+  categoryId: string | null;
 }

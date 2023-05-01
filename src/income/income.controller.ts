@@ -35,6 +35,7 @@ export class IncomeController {
       value: incomeRequest.value,
       status: incomeRequest.status,
       date: new Date(incomeRequest.date),
+      categoryId: incomeRequest.categoryId,
       created_at: new Date(Date.now()),
       updated_at: new Date(Date.now()),
     } as Income;
