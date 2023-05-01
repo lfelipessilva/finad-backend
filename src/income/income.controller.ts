@@ -42,7 +42,7 @@ export class IncomeController {
 
     const transaction = {
       ...income,
-      type: 'expense',
+      type: 'income',
       description: incomeRequest.description,
     } as Transaction;
 
