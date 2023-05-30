@@ -1,11 +1,11 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { Transaction } from '@prisma/client';
+import { Transaction, Prisma } from '@prisma/client';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class TransactionService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(transaction: Transaction): Promise<Transaction> {
     try {
@@ -24,15 +24,29 @@ export class TransactionService {
     }
   }
 
-  async findAll(filters): Promise<Transaction[]> {
+  async findAll(
+    params: {
+      skip?: number,
+      take?: number,
+      cursor?: Prisma.TransactionWhereUniqueInput,
+      where?: Prisma.TransactionWhereInput,
+      orderBy?: Prisma.TransactionOrderByWithRelationInput
+    }): Promise<Transaction[]> {
+    const { skip, take, cursor, where, orderBy } = params;
     try {
-      return await this.prisma.transaction.findMany(filters);
+      return await this.prisma.transaction.findMany({
+        skip,
+        take,
+        cursor,
+        where,
+        orderBy
+      });
     } catch (error) {
-      console.error(error);
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
           error: 'Could not find transactions',
+          detailedMessage: error.message
         },
         HttpStatus.NOT_FOUND,
       );

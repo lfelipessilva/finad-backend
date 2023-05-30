@@ -8,6 +8,8 @@ import {
   Delete,
   UseGuards,
   Request,
+  Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
@@ -15,6 +17,10 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
 import { Transaction } from '../../types/Transaction';
+import { OptionalIntPipe } from 'src/pipes/optional-int.pipe';
+import { CursorPipe } from 'src/pipes/cursor.pipe';
+import { WherePipe } from 'src/pipes/where.pipe';
+import { OrderByPipe } from 'src/pipes/order-by.pipe';
 
 @Controller('transaction')
 export class TransactionController {
@@ -41,9 +47,21 @@ export class TransactionController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll(@Request() req) {
-    const filters = req.query;
-    return this.transactionService.findFromUserById(req.user.id, filters);
+  findAll(
+    @Request() req,
+    @Query('skip', OptionalIntPipe) skip?: number,
+    @Query('take', OptionalIntPipe) take?: number,
+    @Query('cursor', CursorPipe) cursor?: Record<string, number | string>,
+    @Query('where', WherePipe) where?: Record<string, number | string>,
+    @Query('orderBy', OrderByPipe) orderBy?: Record<string, 'asc' | 'desc'>,
+  ) {
+    return this.transactionService.findAll({
+      skip,
+        take,
+        cursor,
+        where: { ...where, user: { id: req.user.id } },
+        orderBy,
+    });
   }
 
   @UseGuards(JwtAuthGuard)
