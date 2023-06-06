@@ -7,23 +7,6 @@ import { PrismaService } from '../../prisma/prisma.service';
 export class TransactionService {
   constructor(private prisma: PrismaService) {}
 
-  async create(transaction: Transaction): Promise<Transaction> {
-    try {
-      return await this.prisma.transaction.create({
-        data: transaction,
-      });
-    } catch (error) {
-      console.log(error);
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Could not create transaction',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
   async findAll(filters): Promise<Transaction[]> {
     try {
       return await this.prisma.transaction.findMany(filters);
@@ -128,48 +111,6 @@ export class TransactionService {
           message: 'Could not find balance',
           displayMessage: 'Houve um problema ao achar valores nas transaçoes',
           detailedMessage: error,
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
-  async update(
-    id: string,
-    updateData: UpdateTransactionDto,
-  ): Promise<Transaction> {
-    try {
-      return await this.prisma.transaction.update({
-        where: {
-          id: id,
-        },
-        data: {
-          ...updateData,
-        },
-      });
-    } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Could not update transaction',
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-  }
-
-  async remove(id: string) {
-    try {
-      return await this.prisma.transaction.delete({
-        where: {
-          id: id,
-        },
-      });
-    } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Could not delete transaction',
         },
         HttpStatus.BAD_REQUEST,
       );

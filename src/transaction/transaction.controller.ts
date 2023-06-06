@@ -23,25 +23,6 @@ export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post()
-  create(@Body() transactionRequest: CreateTransactionDto, @Request() req) {
-    const transaction = {
-      id: uuid(),
-      userId: req.user.id,
-      type: transactionRequest.type,
-      description: transactionRequest.description,
-      value: transactionRequest.value,
-      status: transactionRequest.status,
-      categoryId: transactionRequest.categoryId ?? null,
-      date: new Date(transactionRequest.date),
-      created_at: new Date(Date.now()),
-      updated_at: new Date(Date.now()),
-    } as Transaction;
-
-    return this.transactionService.create(transaction);
-  }
-
-  @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@Request() req) {
     const filters = req.query;
@@ -61,20 +42,5 @@ export class TransactionController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.transactionService.findOne(id);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateTransactionDto: UpdateTransactionDto,
-  ) {
-    return this.transactionService.update(id, updateTransactionDto);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.transactionService.remove(id);
   }
 }
