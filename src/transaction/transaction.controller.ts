@@ -15,7 +15,9 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
 import { Transaction } from '../types/Transaction';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('transaction')
 @Controller('transaction')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}

@@ -16,6 +16,9 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
 import { Expense } from '../types/Expense';
 import { Transaction } from '@prisma/client';
+import { ApiTags } from '@nestjs/swagger';
+
+@ApiTags('expense')
 @Controller('expense')
 export class ExpenseController {
   constructor(private readonly expenseService: ExpenseService) {}
