@@ -9,19 +9,6 @@ services:
   #     - '3000:3000'
   #   depends_on:
   #     - db
-
-  pgsql:
-    image: postgres:alpine
-    ports:
-      - '5430:5432'
-    container_name: 'pgsql'
-    restart: always
-    volumes:
-      - pg-data:/var/lib/postgresql/pgdata
-    environment:
-      POSTGRES_USER: finad
-      POSTGRES_PASSWORD: finad!2022
-
   pgsql_dev:
     image: postgres:alpine
     ports:
