@@ -109,11 +109,11 @@ export class TransactionService {
           value: true,
         },
       });
-      const expenses = query.find(group => group.type === 'expense' )
-      const incomes = query.find(group => group.type === 'income' )
+      const expenses = query.find((group) => group.type === 'expense');
+      const incomes = query.find((group) => group.type === 'income');
 
-      const expense = expenses?.['_sum']?.value ?? 0
-      const income = incomes?.['_sum']?.value ?? 0
+      const expense = expenses?.['_sum']?.value ?? 0;
+      const income = incomes?.['_sum']?.value ?? 0;
 
       return {
         expense,

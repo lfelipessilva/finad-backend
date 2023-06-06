@@ -13,7 +13,7 @@ const testingIncome: Income = {
   created_at: new Date(Date.now()),
   updated_at: new Date(Date.now()),
   date: new Date('December 14, 2004 03:24:00'),
-  categoryId: null
+  categoryId: null,
 };
 
 const testingTransaction: Transaction = {
@@ -52,7 +52,10 @@ describe('IncomeService', () => {
   });
 
   it('should create an income', async () => {
-    const createdIncome = await incomeService.create(testingIncome, testingTransaction);
+    const createdIncome = await incomeService.create(
+      testingIncome,
+      testingTransaction,
+    );
     expect(createdIncome.value).toEqual(testingIncome.value);
     expect(createdIncome.id).toBeTruthy();
   });

@@ -1,6 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TransactionService } from './transaction.service';
 import { PrismaModule } from '../../prisma/prisma.module';
+import { User } from '@prisma/client';
+import { randomUUID } from 'crypto';
 
 describe('TransactionService', () => {
   let service: TransactionService;

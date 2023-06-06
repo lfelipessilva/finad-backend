@@ -20,7 +20,7 @@ const testingTransaction: Transaction = {
   ...testingExpense,
   description: 'test expense',
   type: 'expense',
-  status: 'paid'
+  status: 'paid',
 };
 
 const userForTest = {
@@ -53,9 +53,12 @@ describe('ExpenseService', () => {
   });
 
   it('should create an expense', async () => {
-    const createdExpense = await expenseService.create(testingExpense, testingTransaction);
+    const createdExpense = await expenseService.create(
+      testingExpense,
+      testingTransaction,
+    );
     expect(createdExpense.value).toEqual(testingExpense.value);
-    
+
     expect(createdExpense.id).toBeTruthy();
   });
 
