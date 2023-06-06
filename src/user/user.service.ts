@@ -1,5 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 import { PrismaService } from '../../prisma/prisma.service';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
@@ -94,7 +94,7 @@ export class UserService {
     }
   }
 
-  async update(id: string, updateData: UpdateUserDto): Promise<User> {
+  async update(id: string, updateData: UpdateUserDTO): Promise<User> {
     try {
       return await this.prisma.user.update({
         where: {

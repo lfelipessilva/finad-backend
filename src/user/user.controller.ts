@@ -7,39 +7,48 @@ import {
   Param,
   Delete,
   UseGuards,
+  ValidationPipe,
+  UseInterceptors,
+  ClassSerializerInterceptor,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 import { v4 as uuid } from 'uuid';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { CreateUserDto } from './dto/create-user.dto';
-import { User } from '../types/User';
+import { CreateUserDTO } from './dto/create-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { User } from '@prisma/client';
+import { ResponseUserDTO } from './dto/response-user.dto';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @Post()
-  create(@Body() requestUser: CreateUserDto) {
-    const user = {
+  async create(
+    @Body(new ValidationPipe()) userDTO: CreateUserDTO,
+  ): Promise<ResponseUserDTO> {
+    const user: User = {
       id: uuid(),
-      email: requestUser.email,
-      name: requestUser.name,
-      password: requestUser.password,
+      email: userDTO.email,
+      name: userDTO.name,
+      password: userDTO.password,
       money: 0,
       created_at: new Date(Date.now()),
       updated_at: new Date(Date.now()),
-    } as User;
+    };
 
-    return this.userService.create(user);
+    const query = await this.userService.create(user);
+
+    return new ResponseUserDTO(query);
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.userService.findAll();
+  // }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
@@ -47,10 +56,16 @@ export class UserController {
     return this.userService.findOne(id);
   }
 
+  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtAuthGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(id, updateUserDto);
+  async update(
+    @Param('id') id: string,
+    @Body(new ValidationPipe()) userDTO: UpdateUserDTO,
+  ): Promise<ResponseUserDTO> {
+    const query = await this.userService.update(id, userDTO);
+
+    return new ResponseUserDTO(query);
   }
 
   @UseGuards(JwtAuthGuard)
