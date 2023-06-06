@@ -5,7 +5,7 @@ import { User } from '../types/User';
 import { v4 as uuid } from 'uuid';
 import { Income, Transaction } from '@prisma/client';
 
-const testingIncome = {
+const testingIncome: Income = {
   id: uuid(),
   userId: '',
   value: 120,
@@ -14,13 +14,13 @@ const testingIncome = {
   updated_at: new Date(Date.now()),
   date: new Date('December 14, 2004 03:24:00'),
   categoryId: null
-} as Income;
+};
 
-const testingTransaction = {
+const testingTransaction: Transaction = {
   ...testingIncome,
   type: 'income',
   description: 'desc',
-} as Transaction;
+};
 
 const userForTest = {
   id: uuid(),
