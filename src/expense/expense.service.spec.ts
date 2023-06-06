@@ -3,15 +3,24 @@ import { UserService } from '../user/user.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { User } from '../types/User';
 import { v4 as uuid } from 'uuid';
+import { Expense, Transaction } from '@prisma/client';
 
-const testingExpense = {
+const testingExpense: Expense = {
   id: uuid(),
   userId: '',
-  description: 'test expense',
   value: 120,
   date: new Date('December 14, 2004 03:24:00'),
+  status: 'received',
+  categoryId: null,
   created_at: new Date(Date.now()),
   updated_at: new Date(Date.now()),
+};
+
+const testingTransaction: Transaction = {
+  ...testingExpense,
+  description: 'test expense',
+  type: 'expense',
+  status: 'paid'
 };
 
 const userForTest = {
@@ -44,26 +53,26 @@ describe('ExpenseService', () => {
   });
 
   it('should create an expense', async () => {
-    const createdExpense = await expenseService.create(testingExpense);
+    const createdExpense = await expenseService.create(testingExpense, testingTransaction);
     expect(createdExpense.value).toEqual(testingExpense.value);
+    
     expect(createdExpense.id).toBeTruthy();
   });
 
   it('should return an array of expenses', async () => {
-    const expenses = await expenseService.findAll();
+    const expenses = await expenseService.findAll({});
     expect(expenses).toEqual(expect.arrayContaining([testingExpense]));
   });
 
   it('should find one expense', async () => {
     const foundExpense = await expenseService.findOne(testingExpense.id);
 
-    expect(foundExpense?.description).toBeTruthy();
+    expect(foundExpense?.value).toBeTruthy();
   });
 
   it('should update an expense', async () => {
     const expenseId = testingExpense.id;
     const expenseDataToUpdate = {
-      description: 'updated expense description',
       value: 240,
       date: new Date('July 25, 2001 08:24:00'),
     };
@@ -73,7 +82,6 @@ describe('ExpenseService', () => {
     );
 
     expect(updatedExpense.date).not.toEqual(testingExpense.date);
-    expect(updatedExpense.description).toEqual('updated expense description');
     expect(updatedExpense.value).toEqual(240);
   });
 
