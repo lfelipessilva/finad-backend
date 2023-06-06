@@ -3,16 +3,24 @@ import { UserService } from '../user/user.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { User } from '../types/User';
 import { v4 as uuid } from 'uuid';
+import { Income, Transaction } from '@prisma/client';
 
 const testingIncome = {
   id: uuid(),
   userId: '',
-  description: 'test income',
   value: 120,
-  date: new Date('December 14, 2004 03:24:00'),
+  status: 'received',
   created_at: new Date(Date.now()),
   updated_at: new Date(Date.now()),
-};
+  date: new Date('December 14, 2004 03:24:00'),
+  categoryId: null
+} as Income;
+
+const testingTransaction = {
+  ...testingIncome,
+  type: 'income',
+  description: 'desc',
+} as Transaction;
 
 const userForTest = {
   id: uuid(),
@@ -44,26 +52,25 @@ describe('IncomeService', () => {
   });
 
   it('should create an income', async () => {
-    const createdIncome = await incomeService.create(testingIncome);
+    const createdIncome = await incomeService.create(testingIncome, testingTransaction);
     expect(createdIncome.value).toEqual(testingIncome.value);
     expect(createdIncome.id).toBeTruthy();
   });
 
   it('should return an array of incomes', async () => {
-    const incomes = await incomeService.findAll();
+    const incomes = await incomeService.findAll({});
     expect(incomes).toEqual(expect.arrayContaining([testingIncome]));
   });
 
   it('should find one income', async () => {
     const foundIncome = await incomeService.findOne(testingIncome.id);
 
-    expect(foundIncome?.description).toBeTruthy();
+    expect(foundIncome?.value).toBeTruthy();
   });
 
   it('should update an income', async () => {
     const incomeId = testingIncome.id;
     const incomeDataToUpdate = {
-      description: 'updated income description',
       value: 240,
       date: new Date('July 25, 2001 08:24:00'),
     };
@@ -73,7 +80,6 @@ describe('IncomeService', () => {
     );
 
     expect(updatedIncome.date).not.toEqual(testingIncome.date);
-    expect(updatedIncome.description).toEqual('updated income description');
     expect(updatedIncome.value).toEqual(240);
   });
 

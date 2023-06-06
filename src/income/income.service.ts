@@ -96,6 +96,7 @@ export class IncomeService {
         },
       });
     } catch (error) {
+      console.error(error);
       throw new HttpException(
         {
           status: HttpStatus.BAD_REQUEST,
