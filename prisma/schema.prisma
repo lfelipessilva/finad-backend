@@ -79,19 +79,19 @@ model Category {
   created_at   DateTime      @default(now())
   updated_at   DateTime      @default(now())
   transactions Transaction[]
-  Expense      Expense[]
-  Income       Income[]
+  expenses     Expense[]
+  incomes      Income[]
 }
 
 model Account {
-  id          String        @id @unique
-  name        String
-  description String
-  user        User          @relation(fields: [userId], references: [id])
-  userId      String
-  created_at  DateTime      @default(now())
-  updated_at  DateTime      @default(now())
-  Expense     Expense[]
-  Transaction Transaction[]
-  Income      Income[]
+  id           String        @id @unique
+  name         String
+  description  String
+  user         User          @relation(fields: [userId], references: [id])
+  userId       String
+  created_at   DateTime      @default(now())
+  updated_at   DateTime      @default(now())
+  expenses     Expense[]
+  transactions Transaction[]
+  incomes      Income[]
 }
