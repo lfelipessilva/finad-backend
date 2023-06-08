@@ -1,1 +1,5 @@
-export class CreateAccountDto {}
+export class CreateAccountDTO {
+  name:         String;
+  description:  String;
+  userId:       String;
+}

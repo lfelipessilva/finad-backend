@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAccountDto } from './dto/create-account.dto';
+import { CreateAccountDTO } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
+import { Account } from '@prisma/client';
 
 @Injectable()
 export class AccountService {
-  create(createAccountDto: CreateAccountDto) {
+  create(account: CreateAccountDTO) {
     return 'This action adds a new account';
   }
 
