@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider          = "postgresql"
-  url               = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -19,49 +19,56 @@ model User {
   incomes      Income[]
   expenses     Expense[]
   transactions Transaction[]
+  accounts     Account[]
   created_at   DateTime      @default(now())
   updated_at   DateTime      @default(now())
 }
 
 model Income {
-  id          String    @id @unique
-  user        User      @relation(fields: [userId], references: [id])
-  userId      String
-  value       Int
-  status      String
-  category    Category? @relation(fields: [categoryId], references: [id])
-  categoryId  String?
-  date        DateTime
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @default(now())
-}
-
-model Expense {
-  id          String    @id @unique
-  user        User      @relation(fields: [userId], references: [id])
-  userId      String
-  value       Int
-  status      String
-  category    Category? @relation(fields: [categoryId], references: [id])
-  categoryId  String?
-  date        DateTime
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @default(now())
-}
-
-model Transaction {
   id         String    @id @unique
   user       User      @relation(fields: [userId], references: [id])
   userId     String
+  value      Int
   status     String
-  type       String
-  description String
   category   Category? @relation(fields: [categoryId], references: [id])
   categoryId String?
-  value      Int
+  account    Account   @relation(fields: [accountId], references: [id])
+  accountId  String
   date       DateTime
   created_at DateTime  @default(now())
   updated_at DateTime  @default(now())
+}
+
+model Expense {
+  id         String    @id @unique
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String
+  value      Int
+  status     String
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
+  account    Account   @relation(fields: [accountId], references: [id])
+  accountId  String
+  date       DateTime
+  created_at DateTime  @default(now())
+  updated_at DateTime  @default(now())
+}
+
+model Transaction {
+  id          String    @id @unique
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  status      String
+  type        String
+  description String
+  category    Category? @relation(fields: [categoryId], references: [id])
+  categoryId  String?
+  account     Account   @relation(fields: [accountId], references: [id])
+  accountId   String
+  value       Int
+  date        DateTime
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @default(now())
 }
 
 model Category {
@@ -74,4 +81,17 @@ model Category {
   transactions Transaction[]
   Expense      Expense[]
   Income       Income[]
+}
+
+model Account {
+  id          String        @id @unique
+  name        String
+  description String
+  user        User          @relation(fields: [userId], references: [id])
+  userId      String
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @default(now())
+  Expense     Expense[]
+  Transaction Transaction[]
+  Income      Income[]
 }
