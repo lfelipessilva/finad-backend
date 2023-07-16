@@ -14,8 +14,7 @@ import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
-import { Expense } from '../types/Expense';
-import { Transaction } from '@prisma/client';
+import { Expense, Transaction } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('expense')

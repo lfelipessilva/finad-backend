@@ -13,7 +13,6 @@ export class IncomeService {
         data: income,
       });
 
-      console.log(transaction);
       const createTransaction = this.prisma.transaction.create({
         data: transaction,
       });

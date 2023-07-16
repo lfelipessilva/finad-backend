@@ -14,8 +14,7 @@ import { CreateIncomeDto } from './dto/create-income.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { v4 as uuid } from 'uuid';
-import { Income } from '../types/Income';
-import { Transaction } from '@prisma/client';
+import { Income, Transaction } from '@prisma/client';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('income')
