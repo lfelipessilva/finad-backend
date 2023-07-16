@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   async create(user: User): Promise<User> {
     try {
@@ -113,7 +113,6 @@ export class UserService {
       );
     }
   }
-
 
   async update(id: string, updateData: UpdateUserDTO): Promise<User> {
     try {

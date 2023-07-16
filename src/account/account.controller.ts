@@ -9,32 +9,50 @@ import {
   HttpException,
   HttpStatus,
   Request,
-  Response
+  Response,
+  UseGuards,
+  ValidationPipe,
+  ClassSerializerInterceptor,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { CreateAccountDTO } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ResponseAccountDTO } from './dto/response-account.dto';
+import { Account } from '@prisma/client';
+import { randomUUID } from 'crypto';
 
 @ApiTags('account')
 @Controller('account')
 export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(JwtAuthGuard)
   @Post()
-  create(@Body() createAccountDTO: CreateAccountDTO, @Request() req, @Response() res) {
-    if(!req.user) {
-      throw new HttpException(
-        {
-          status: HttpStatus.UNAUTHORIZED,
-          error: 'Cannot create account without user',
-          message: 'No user in request',
-        },
-        HttpStatus.UNAUTHORIZED,
-      );
+  async create(
+    @Body(new ValidationPipe()) createAccountDTO: CreateAccountDTO,
+    @Request() req,
+    @Response() res,
+  ): Promise<ResponseAccountDTO> {
+    try {
+      const account: Account = {
+        id: randomUUID(),
+        userId: req.user.id,
+        ...createAccountDTO,
+        created_at: new Date(Date.now()),
+        updated_at: new Date(Date.now()),
+      };
 
+      const query = await this.accountService.create(account);
+
+      return new ResponseAccountDTO(query);
+    } catch (e) {
+      console.log(e);
+      return e;
     }
-    return this.accountService.create(createAccountDTO);
   }
 
   @Get()

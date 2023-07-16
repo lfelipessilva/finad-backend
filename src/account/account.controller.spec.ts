@@ -6,7 +6,8 @@ import { CreateAccountDTO } from './dto/create-account.dto';
 import { UserService } from '../user/user.service';
 import { PrismaService } from '../../prisma/prisma.service';
 import { randomUUID } from 'crypto';
-import {faker} from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
+import { PrismaModule } from '../../prisma/prisma.module';
 
 describe('AccountController', () => {
   let accountController: AccountController;
@@ -17,11 +18,12 @@ describe('AccountController', () => {
     prismaService = new PrismaService();
     userService = new UserService(prismaService);
 
-    prismaService.user.deleteMany()
-  })
+    prismaService.user.deleteMany();
+  });
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [PrismaModule],
       controllers: [AccountController],
       providers: [AccountService],
     }).compile();
@@ -55,8 +57,8 @@ describe('AccountController', () => {
   //   expect(response.data).toHaveProperty('id')
   //   expect(response.status).toBe(201)
   // });
-  
+
   afterAll(() => {
-    prismaService.user.deleteMany()
-  })
+    prismaService.user.deleteMany();
+  });
 });

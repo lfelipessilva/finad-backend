@@ -1,6 +1,6 @@
-import { IsDate, IsString, Validate } from "class-validator";
-import { UserExistsRule } from "../validate/userExists.validate";
-import { Account } from "@prisma/client";
+import { IsDate, IsString, Validate } from 'class-validator';
+import { UserExistsRule } from '../validate/userExists.validate';
+import { Account } from '@prisma/client';
 
 export class ResponseAccountDTO {
   @IsString()
@@ -23,4 +23,3 @@ export class ResponseAccountDTO {
     Object.assign(this, partial);
   }
 }
-
