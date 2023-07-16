@@ -6,7 +6,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   async create(user: User): Promise<User> {
     try {
@@ -93,6 +93,27 @@ export class UserService {
       );
     }
   }
+
+  async findById(id: string): Promise<User | null> {
+    try {
+      return await this.prisma.user.findFirst({
+        where: {
+          email: id,
+        },
+      });
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          message: 'Could not find user',
+          displayMessage: 'Houve um problema ao encontrar usuário',
+          detailedMessage: error,
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+  }
+
 
   async update(id: string, updateData: UpdateUserDTO): Promise<User> {
     try {

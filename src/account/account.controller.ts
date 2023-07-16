@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { CreateAccountDTO } from './dto/create-account.dto';
@@ -18,8 +20,20 @@ export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   @Post()
-  create(@Body() accountDTO: CreateAccountDTO) {
-    return this.accountService.create(accountDTO);
+  create(@Body() createAccountDTO: CreateAccountDTO, @Request() req, @Response() res) {
+    console.log(req)
+    if(!req.user) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Could not create income',
+          message: 'user does not exist',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+
+    }
+    return this.accountService.create(createAccountDTO);
   }
 
   @Get()
