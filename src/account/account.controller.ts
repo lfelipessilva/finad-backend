@@ -8,6 +8,8 @@ import {
   Delete,
   HttpException,
   HttpStatus,
+  Request,
+  Response
 } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { CreateAccountDTO } from './dto/create-account.dto';
@@ -21,15 +23,14 @@ export class AccountController {
 
   @Post()
   create(@Body() createAccountDTO: CreateAccountDTO, @Request() req, @Response() res) {
-    console.log(req)
     if(!req.user) {
       throw new HttpException(
         {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Could not create income',
-          message: 'user does not exist',
+          status: HttpStatus.UNAUTHORIZED,
+          error: 'Cannot create account without user',
+          message: 'No user in request',
         },
-        HttpStatus.BAD_REQUEST,
+        HttpStatus.UNAUTHORIZED,
       );
 
     }

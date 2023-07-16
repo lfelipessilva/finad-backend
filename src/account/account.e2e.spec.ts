@@ -51,11 +51,9 @@ describe('AccountController', () => {
 
     const response = await supertest(app.getHttpServer())
       .post('/account')
-      .expect(200)
-      .send(account)
+      .expect(401)
 
-    console.log(response)
-    expect(response.status).toBe(400)
+    expect(response.status).toBe(401)
   })
 
   it('should create an account', async () => {
@@ -79,10 +77,6 @@ describe('AccountController', () => {
       .post('/account')
       .expect(200)
       .send(account)
-    // const response: any = accountController.create(account)
-    //  
-    // expect(response.data).toHaveProperty('id')
-    // expect(response.status).toBe(201)
   });
 
   afterAll(() => {
