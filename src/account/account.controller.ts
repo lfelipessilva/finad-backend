@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { AccountService } from './account.service';
-import { CreateAccountDTO as CreateAccountDTO } from './dto/create-account.dto';
+import { CreateAccountDTO } from './dto/create-account.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { ApiTags } from '@nestjs/swagger';
 

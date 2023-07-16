@@ -5,7 +5,7 @@ import { Account } from '@prisma/client';
 
 @Injectable()
 export class AccountService {
-  create(account: CreateAccountDTO) {
+  create(createAccountDTO: CreateAccountDTO) {
     return 'This action adds a new account';
   }
 
