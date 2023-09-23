@@ -35,29 +35,6 @@ describe('AccountController', () => {
     expect(accountController).toBeDefined();
   });
 
-  // it('should create an account', async () => {
-  //   const user = await userService.create({
-  //     id: randomUUID(),
-  //     name: faker.person.firstName(),
-  //     email: faker.internet.email(),
-  //     money: 0,
-  //     password: faker.internet.password(),
-  //     created_at: new Date(),
-  //     updated_at: new Date(),
-  //   })
-  //
-  //   const account: CreateAccountDTO = {
-  //     userId: user.id,
-  //     name: 'test',
-  //     description: 'for testing purposes',
-  //   }
-  //
-  //   const response: any = accountController.create(account)
-  //
-  //   expect(response.data).toHaveProperty('id')
-  //   expect(response.status).toBe(201)
-  // });
-
   afterAll(() => {
     prismaService.user.deleteMany();
   });
