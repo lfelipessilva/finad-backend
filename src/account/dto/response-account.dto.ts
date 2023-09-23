@@ -1,21 +1,26 @@
 import { IsDate, IsString, Validate } from 'class-validator';
 import { UserExistsRule } from '../validate/userExists.validate';
 import { Account } from '@prisma/client';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class ResponseAccountDTO {
-  @IsString()
   @Validate(UserExistsRule)
+  @ApiProperty()
   userId: string;
 
+  @ApiProperty()
   @IsString()
   name: string;
 
+  @ApiProperty()
   @IsString()
   description: string;
 
-  @IsDate()
+  @ApiProperty()
+  @IsString()
   createdAt: Date;
 
+  @ApiProperty()
   @IsDate()
   updatedAt: Date;
 

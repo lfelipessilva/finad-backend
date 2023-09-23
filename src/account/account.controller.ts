@@ -6,10 +6,7 @@ import {
   Patch,
   Param,
   Delete,
-  HttpException,
-  HttpStatus,
   Request,
-  Response,
   UseGuards,
   ValidationPipe,
   ClassSerializerInterceptor,
@@ -35,7 +32,6 @@ export class AccountController {
   async create(
     @Body(new ValidationPipe()) createAccountDTO: CreateAccountDTO,
     @Request() req,
-    @Response() res,
   ): Promise<ResponseAccountDTO> {
     try {
       const account: Account = {
@@ -55,9 +51,14 @@ export class AccountController {
     }
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.accountService.findAll();
+  findAll(@Request() req) {
+    return this.accountService.findAll({
+      where: {
+        userId: req.user.id,
+      },
+    });
   }
 
   @Get(':id')

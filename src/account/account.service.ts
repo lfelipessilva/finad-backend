@@ -28,10 +28,20 @@ export class AccountService {
     }
   }
 
-  findAll() {
-    return `This action returns all account`;
+  async findAll(filters): Promise<Account[]> {
+    try {
+      return await this.prisma.account.findMany(filters);
+    } catch (error) {
+      console.error(error);
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'Could not find accounts',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
-
   findOne(id: number) {
     return `This action returns a #${id} account`;
   }
